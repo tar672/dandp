@@ -9,7 +9,7 @@
 typedef struct {
   clarg_type arg_t;
   cl_mem dev_buf;
-  char *host_buf;
+  int *host_buf;
   int    num_elems;
   int    val;
 } kernel_arg;
@@ -118,19 +118,19 @@ cl_kernel setupKernel( const char *kernel_source, char *kernel_name, int num_arg
     for(i=0; (i<num_args) && (kernel != NULL); i++) {
       kernel_args[i].arg_t =va_arg(ap, clarg_type);
       switch( kernel_args[i].arg_t) {
-        case CharArr:
+        case IntArr:
         
           kernel_args[i].num_elems = va_arg(ap, int);
-          kernel_args[i].host_buf = va_arg(ap, char *);
+          kernel_args[i].host_buf = va_arg(ap, int *);
           /* Create the device memory vector  */
           kernel_args[i].dev_buf = clCreateBuffer (context, CL_MEM_READ_WRITE,
-                                                   sizeof (char) * kernel_args[i].num_elems, NULL, NULL);
+                                                   sizeof (int) * kernel_args[i].num_elems, NULL, NULL);
           if (!kernel_args[i].dev_buf ) {
             die ("Error: Failed to allocate device memory for arg %d!", i+1);
             kernel = NULL;
           } else {
             err = clEnqueueWriteBuffer( commands, kernel_args[i].dev_buf, CL_TRUE, 0,
-                                                  sizeof (char) * kernel_args[i].num_elems,
+                                                  sizeof (int) * kernel_args[i].num_elems,
                                                   kernel_args[i].host_buf, 0, NULL, NULL);
             if( CL_SUCCESS != err) {
               die ("Error: Failed to write to source array for arg %d!", i+1);
@@ -178,11 +178,10 @@ cl_int runKernel( cl_kernel kernel, int dim, size_t *global, size_t *local)
 
   for( int i=0; i< num_kernel_args; i++) {
     
-    if( kernel_args[i].arg_t == CharArr) {
+    if( kernel_args[i].arg_t == IntArr) {
       err = clEnqueueReadBuffer (commands, kernel_args[i].dev_buf,
-                              CL_TRUE, 0, sizeof (char) * kernel_args[i].num_elems,
+                              CL_TRUE, 0, sizeof (int) * kernel_args[i].num_elems,
                               kernel_args[i].host_buf, 0, NULL, NULL);
-                              printf("err: %d\n", err);
       if( err != CL_SUCCESS) 
         die( "Error: Failed to transfer back arg %d!", i);
     }
@@ -203,7 +202,7 @@ cl_int freeDevice()
   cl_int err;
 
   for( int i=0; i< num_kernel_args; i++) {
-    if(kernel_args[i].arg_t == CharArr) 
+    if(kernel_args[i].arg_t == IntArr) 
       err = clReleaseMemObject (kernel_args[i].dev_buf);
   }
   err = clReleaseProgram (program);
