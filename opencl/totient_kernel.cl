@@ -6,13 +6,13 @@ __kernel void totient(__global int* g_results, const int wgs) {
   int i = get_global_id(0);
   int x, y, t;
   
-  int local_id = get_local_id(0);
+  //int local_id = get_local_id(0);
   
-  local int l_result[1];
+  //local int l_result[1];
   
-  if(local_id == 0) l_result[0] = 0;
+  //if(local_id == 0) l_result[0] = 0;
   
-  barrier(CLK_LOCAL_MEM_FENCE);
+  //barrier(CLK_LOCAL_MEM_FENCE);
   
 
   x = floor((sqrt((8*(double)i)+1)-1)/2)+1;
@@ -28,13 +28,14 @@ __kernel void totient(__global int* g_results, const int wgs) {
   
   
   
-  if(x == 1) atomic_inc(&l_result[0]);
-  barrier(CLK_LOCAL_MEM_FENCE);
+  //if(x == 1) atomic_inc(&l_result[0]);
+  //barrier(CLK_LOCAL_MEM_FENCE);
   
-  if(local_id == 0) {
+  //if(local_id == 0) {
     
-    atomic_add(&g_results[i %wgs], l_result[0]);
-  }
+  //  atomic_add(&g_results[i %wgs], l_result[0]);
+  //}
+  atomic_inc(&g_results[i %wgs]);
 }
 
 
