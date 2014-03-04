@@ -21,7 +21,7 @@ int main(int argc, char ** argv)
   sscanf(argv[2], "%ld", &upper);
   sscanf(argv[3], "%d", &WGS);
 
-  long results_size = ((upper-1)*((upper-1)+1)/2);
+  long results_size = (upper*(upper-1))/2;
 
   long* results = (long *) malloc(sizeof(long)*WGS);
   int i;
@@ -57,8 +57,7 @@ int main(int argc, char ** argv)
 
   long tot = 0;
   int l;
-  for(l = 0; l < WGS; l ++)
-    tot += results[l];
+  for(l = 0; l < WGS; l ++) tot += results[l];
   
   printf("C: Sum of Totients between [%ld..%ld] is %ld\n",
     lower, upper, tot);

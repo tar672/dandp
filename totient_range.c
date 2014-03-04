@@ -11,9 +11,19 @@
 // Phil Trinder, Nathan Charles, Hans-Wolfgang Loidl and Colin Runciman
 
 #include <stdio.h>
-
+#include <time.h>
 // hcf x 0 = x
 // hcf x y = hcf y (rem x y)
+
+
+struct timespec start, stop;
+
+void printTimeElapsed( char *text)
+{
+  double elapsed = (stop.tv_sec -start.tv_sec)*1000.0
+                  + (double)(stop.tv_nsec -start.tv_nsec)/1000000.0;
+  printf( "%s: %f msec\n", text, elapsed);
+}
 
 long hcf(long x, long y)
 {
@@ -72,7 +82,12 @@ int main(int argc, char ** argv)
   }
   sscanf(argv[1], "%ld", &lower);
   sscanf(argv[2], "%ld", &upper);
+  
+  clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &start);
   printf("C: Sum of Totients  between [%ld..%ld] is %ld\n",
          lower, upper, sumTotient(lower, upper));
+  clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &stop);
+  printTimeElapsed("CPU time spent");
+  
   return 0;
 }
