@@ -3,9 +3,12 @@
 __kernel void totient(__global int* g_results, const int wgs) {   
 
   int i = get_global_id(0);
-  int x, y, t;
-
-  x = floor((sqrt((8*(double)i)+1)-1)/2)+1;
+  long x, y, t, max, j;
+  
+  for(j = 0, max = 0; max < i; j ++) {
+    x = j;
+    max = (j*(j-1))/2;
+  }
 
   y = x-(i-((x-1)*((x-1)+1)/2));
   
