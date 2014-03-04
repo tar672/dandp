@@ -1,0 +1,12 @@
+Runtime and Profiling for a by [100 1200]
+100 times, repeated 1:
+C: Sum of Totients  between [1..100] is 3043
+100 times, repeated 2:
+C: Sum of Totients  between [1..100] is 3043
+1200 times, repeated 1:
+C: Sum of Totients  between [1..1200] is 437785
+1200 times, repeated 2:
+C: Sum of Totients  between [1..1200] is 437785
+C: Sum of Totients  between [1..15000] is 68394315
+C: Sum of Totients  between [1..30000] is 273571773
+C: Sum of Totients  between [1..100000] is 3039650753

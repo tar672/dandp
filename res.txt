@@ -1,0 +1,6 @@
+C: Sum of Totients  between [1..100000] is 3039650753
+CPU time spent: 831370.744922 msec
+
+real	13m52.431s
+user	13m51.013s
+sys	0m0.232s
