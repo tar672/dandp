@@ -5,8 +5,16 @@ __kernel void totient(__global long* g_results, const int wgs) {
 
   size_t i = get_global_id(0);
   size_t x, y, t;
+  
+  double sr;
+  
+  double op = (8*(double)i)+1;
+  
+  sr = sqrt(op);
+  
+  if(sr > (op*op)) sr -= 1;
 
-  x = floor( (sqrt( (8*(double)i)+1)+1 )/2 )+1;
+  x = floor( (sr+1)/2 )+1;
 
   y = x-(i-((x-1)*((x-1)+1)/2));
   
