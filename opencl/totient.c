@@ -23,7 +23,7 @@ int main(int argc, char ** argv)
 
   long results_size = ((upper-1)*((upper-1)+1)/2);
 
-  int* results = (int *) malloc(sizeof(int)*WGS);
+  long* results = (long *) malloc(sizeof(long)*WGS);
   int i;
   for(i = 0; i < WGS; i ++) results[i] = 0;
 
@@ -49,7 +49,7 @@ int main(int argc, char ** argv)
 
   // Fill in here:
   kernel = setupKernel( KernelSource, "totient", 2,
-                                  IntArr, WGS, results,
+                                  LongArr, WGS, results,
                                   IntConst, WGS);
 
   // Fill in here:

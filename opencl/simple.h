@@ -52,7 +52,7 @@ extern cl_int initCPU ();
  ******************************************************************************/
 
 typedef enum {
-  IntArr,
+  LongArr,
   IntConst
 } clarg_type;
 
