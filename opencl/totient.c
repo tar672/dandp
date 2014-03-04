@@ -25,7 +25,7 @@ int main(int argc, char ** argv)
 
   long* results = (long *) malloc(sizeof(long)*WGS);
   int i;
-  for(i = 0; i < WGS; i ++) results[i] = 0;
+  for(i = 0; i < WGS; i ++) results[i] = 0L;
 
   printf("%ld\n", results_size);
   FILE *fp;

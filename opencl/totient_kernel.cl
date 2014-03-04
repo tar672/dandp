@@ -1,15 +1,15 @@
 //Kernel source
-#pragma OPENCL EXTENSION cl_khr_fp64: enable
 #pragma OPENCL EXTENSION cl_khr_int64_base_atomics: enable
 __kernel void totient(__global long* g_results, const int wgs) {   
 
-  long i = get_global_id(0);
-  long x, y, t, max, j;
+  size_t i = get_global_id(0);
+  size_t x, y, t, max, j;
   
-  for(j = 0, max = 0; max <= i; j ++) {
-    x = j;
+  for(j = 10000, max = (j*(j-1))/2; max > i; j --) {
+    x = j + 1;
     max = (j*(j-1))/2;
   }
+
 
   y = x-(i-((x-1)*x)/2);
   
@@ -19,6 +19,6 @@ __kernel void totient(__global long* g_results, const int wgs) {
     y = t;
   }
 
-  if(x == 1) atomic_inc(&g_results[i % wgs]);
+  if(x == 1) atom_inc(&g_results[i % wgs]);
 
 }
