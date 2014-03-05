@@ -17,18 +17,16 @@ int main(int argc, char ** argv)
     printf("not 2 arguments\n");
     return 1;
   }
-  sscanf(argv[2], "%ld", &upper);
-  sscanf(argv[3], "%d", &WGS);
-  
-  //Calculate the number of hcf calls required
-  long results_size = ((upper-1)*upper)/2;
-  
-  //Array for summing the totals
+  sscanf(argv[1], "%ld", &upper);
+  sscanf(argv[2], "%d", &WGS);
+
+  long results_size = ((upper-1)*((upper-1)+1)/2);
+
   long* results = (long *) malloc(sizeof(long)*WGS);
   int i;
   for(i = 0; i < WGS; i ++) results[i] = 0;
 
-  //Read in the kernel
+  printf("%ld\n", results_size);
   FILE *fp;
   char *KernelSource;
   cl_kernel kernel;
@@ -41,8 +39,6 @@ int main(int argc, char ** argv)
   fread( KernelSource, 1, MAX_SOURCE_SIZE, fp);
   fclose( fp );
   
-  
-  //Set up and run the kernel using the simple.c functions
   size_t local[1];
   size_t global[1];
   local[0] = WGS;
@@ -55,14 +51,13 @@ int main(int argc, char ** argv)
                                   IntConst, WGS);
 
   runKernel( kernel, 1, global, local);
-  
-  //Sum the Totals
+
   long tot = 0;
   int l;
   for(l = 0; l < WGS; l ++)
     tot += results[l];
   
-  printf("C: Sum of Totients between [%ld..%ld] is %ld\n",
-    lower, upper, tot);
+  printf("C: Sum of Totients between [1..%ld] is %ld\n",
+    upper, tot);
   return 0;
 }
