@@ -1,0 +1,21 @@
+4999950000
+C: Sum of Totients between [1..100000] is 3039673881
+
+real	0m56.429s
+user	0m11.259s
+sys	0m45.108s
+tr51@linux08 ../project/opencl (master)  $ time ./totient 1 30000 100
+449985000
+C: Sum of Totients between [1..30000] is 273571773
+
+real	0m4.956s
+user	0m1.066s
+sys	0m3.876s
+tr51@linux08 ../project/opencl (master)  $ time ./totient 1 10000 100
+49995000
+C: Sum of Totients between [1..10000] is 30397485
+
+real	0m0.579s
+user	0m0.103s
+sys	0m0.466s
+tr51@linux08 ../project/opencl (master)  $ 
