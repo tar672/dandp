@@ -9,14 +9,14 @@ eulersum m = length (filter (relprime m) [1 .. m-1])
 
 euler xs = sum (map eulersum xs)
 
-split xs = split' 2 xs
+split xs = split' 2 (reverse xs)
 split' m [] = []
 split' m xs = ( take (getl m) xs ):( split' (m + 1) (drop (getl m) xs) )
 
 getl l = abs(floor(logBase 1.1 l))
 
 
-sumTotient lower upper = sum (parMap rpar euler (split (reverse [lower, lower+1 .. upper])))
+sumTotient lower upper = sum (parMap rpar euler (split [lower .. upper]))
 
 
-main = print (sumTotient 1 30000)
+main = print (sumTotient 1 100000)
