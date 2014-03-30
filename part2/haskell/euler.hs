@@ -5,18 +5,25 @@ hcf x y = hcf y (rem x y)
 
 relprime x y = hcf x y == 1
 
-eulersum m = length (filter (relprime m) [1 .. m-1])
+euler m = length (filter (relprime m) [1 .. m-1])
 
-euler xs = sum (map eulersum xs)
+sumTotient lower upper = sum ((map euler [lower .. upper]) `using` parAscListChunk 50 rseq)
 
-split xs = split' 2 (reverse xs)
-split' m [] = []
-split' m xs = ( take (getl m) xs ):( split' (m + 1) (drop (getl m) xs) )
-
-getl l = abs(floor(logBase 1.1 l))
+main = print (sumTotient 1 30000)
 
 
-sumTotient lower upper = sum (parMap rpar euler (split [lower .. upper]))
+
+parAscListRevPair n strat xs = 
+	parListChunk n strat (reorder xs)
+
+reorder xs = merge (take (ll xs) xs) (reverse (drop (ll xs) xs))
+
+ll xs = (length xs) `quot` 2
+
+merge xs     []     = xs
+merge []     ys     = ys
+merge (x:xs) (y:ys) = x : y : merge xs ys
 
 
-main = print (sumTotient 1 100000)
+
+
